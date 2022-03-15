@@ -52,7 +52,7 @@
       <br>
       <div class = "container" my-5>
       <p> <b>  Hello {{request.user}}</b> </p>
-      <p>  <b>This is the place where boomers can help each other and contribtue to other generations. </b></p>
+      <p >  <b>This is the place where boomers can help each other and contribtue to other generations. </b></p>
       {% else %}
       <div class = "container" my-5>
         <br>
@@ -64,7 +64,7 @@
       <div class = "container">
         <br>
         <form method = "GET" action = "{% url 'home'%}">
-            <input type ="text" name ="q" placeholder ="Search"/>
+            <input type ="text" name ="q" placeholder ="Search rooms"/>
         </form>
         </div>
       <hr>

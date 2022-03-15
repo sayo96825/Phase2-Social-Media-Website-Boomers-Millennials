@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Room , Topic, Message, FollowersCount
+from .models import Room, Topic, Message, FollowersCount
 
 admin.site.register(Room)
 admin.site.register(Topic)

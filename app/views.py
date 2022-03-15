@@ -95,12 +95,32 @@ def room(request,pk):
     return render(request, 'app/room.html',context)
 
 def userProfile(request, pk):
+    #current_user = request.GET.get('user')
     user = User.objects.get(id=pk)
+    logged_in_user = request.user.username
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
+    user_followers = len(FollowersCount.objects.filter(user=user))
+    user_followeing = len(FollowersCount.objects.filter(follower=user))
+    user_followers0 = (FollowersCount.objects.filter(user=user))
+    user_followers1 =[]
+    for i in user_followers0:
+        user_followers0 = i.follow
+        user_followers1.append(user_followers0)
+    if logged_in_user in user_followers1:
+        follow_button_value = "unfollow"
+
+    else:
+        follow_button_value = "follow"
+    print(user_followers)
     context = {'user': user, 'rooms': rooms,
-                'room_messages': room_messages, 'topics': topics}
+                'room_messages': room_messages, 'topics': topics,'user_followers': user_followers,
+        'user_following': user_followeing, 'follow_button_value':follow_button_value}
+
+    return render(request,'app/profile.html',context)
+    
+    
     return render(request, 'app/profile.html', context)
 
 @login_required(login_url='login')
@@ -190,26 +210,10 @@ def updateUser(request):
     return render(request, 'app/update-user.html', {'form': form})
 
 def index(request):
-    current_user = request.GET.get('user')
-    logged_in_user = request.user.username
-    user_followers = len(FollowersCount.objects.filter(user=current_user))
-    user_followeing = len(FollowersCount.objects.filter(follower=current_user))
-    user_followers0 = (FollowersCount.objects.filter(userr=current_user))
-    user_followers1 =[]
-    for i in user_followers0:
-        user_followers0 = i.follow
-        user_followers1.append(user_followers0)
-    if logged_in_user in user_followers1:
-        follow_button_value = "unfollow"
-
-    else:
-        follow_button_value = "follow"
-    print(user_followers)
-    return render(request,'profile.html',{'current_user': current_user,'user_followers': user_followers,
-        'user_following': user_followeing
-        })
+    pass
 
 def followers_count(request):
+    
     if request.method == 'POST':
         value = request.POST['value']
         user = request.POST['user']
@@ -221,4 +225,4 @@ def followers_count(request):
             followers_cnt = FollowersCount.objects.create(follower=follower, user=user)
             followers_cnt.delete
 
-        return redirect('/?user =' +user)
+        return redirect('/?user='+user)
