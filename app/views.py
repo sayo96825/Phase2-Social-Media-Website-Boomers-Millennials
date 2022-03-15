@@ -3,11 +3,12 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Room, Topic, Message
+from .models import Room, Topic, Message, FollowersCount
 from.forms import RoomForm, UserForm
+import requests
 
 # Create your views here.
 
@@ -57,7 +58,7 @@ def registerPage(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Sorry, someting went wrong during restration ...')
+            messages.error(request, 'Sorry, someting went wrong during registration ...')
 
     return render(request, 'app/login_register.html', {'form': form})
 
@@ -93,8 +94,6 @@ def room(request,pk):
     context = {'room': room, 'room_messages': room_messages,'participants': participants}
     return render(request, 'app/room.html',context)
 
-
-
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
@@ -103,7 +102,6 @@ def userProfile(request, pk):
     context = {'user': user, 'rooms': rooms,
                 'room_messages': room_messages, 'topics': topics}
     return render(request, 'app/profile.html', context)
-
 
 @login_required(login_url='login')
 def createRoom(request):
@@ -130,7 +128,6 @@ def createRoom(request):
     context =  {'form': form} #, 'topics': topics}
     return render(request, 'app/room_form.html', context)
 
-
 @login_required(login_url='login')
 def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
@@ -155,7 +152,6 @@ def updateRoom(request, pk):
     context = {'form': form}#'topics': topics, 'room': room}
     return render(request, 'app/room_form.html', context)
 
-
 @login_required(login_url='login')
 def deleteRoom(request, pk):
     room = Room.objects.get(id=pk)
@@ -168,7 +164,6 @@ def deleteRoom(request, pk):
         return redirect('home')
     return render(request, 'app/delete.html', {'obj': room})
 
-
 @login_required(login_url='login')
 def deleteMessage(request, pk):
     message = Message.objects.get(id=pk)
@@ -180,7 +175,6 @@ def deleteMessage(request, pk):
         message.delete()
         return redirect('home')
     return render(request, 'app/delete.html', {'obj': message})
-
 
 @login_required(login_url='login')
 def updateUser(request):
@@ -195,3 +189,36 @@ def updateUser(request):
 
     return render(request, 'app/update-user.html', {'form': form})
 
+def index(request):
+    current_user = request.GET.get('user')
+    logged_in_user = request.user.username
+    user_followers = len(FollowersCount.objects.filter(user=current_user))
+    user_followeing = len(FollowersCount.objects.filter(follower=current_user))
+    user_followers0 = (FollowersCount.objects.filter(userr=current_user))
+    user_followers1 =[]
+    for i in user_followers0:
+        user_followers0 = i.follow
+        user_followers1.append(user_followers0)
+    if logged_in_user in user_followers1:
+        follow_button_value = "unfollow"
+
+    else:
+        follow_button_value = "follow"
+    print(user_followers)
+    return render(request,'profile.html',{'current_user': current_user,'user_followers': user_followers,
+        'user_following': user_followeing
+        })
+
+def followers_count(request):
+    if request.method == 'POST':
+        value = request.POST['value']
+        user = request.POST['user']
+        follower = request.POST['follower']
+        if value == 'follow':
+            followers_cnt = FollowersCount.objects.create(follower=follower, user=user)
+            followers_cnt.save()
+        else:
+            followers_cnt = FollowersCount.objects.create(follower=follower, user=user)
+            followers_cnt.delete
+
+        return redirect('/?user =' +user)
