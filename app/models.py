@@ -1,13 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Topic(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
-
 
 class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -25,7 +23,6 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
-
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -38,3 +35,10 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+class FollowersCount(models.Model):
+    follower = models.CharField(max_length=1000)
+    user = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.user

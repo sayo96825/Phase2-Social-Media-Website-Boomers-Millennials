@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +46,18 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,6 +69,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Boomers.urls'
+
+LOGIN_REDIRECT_URL ='/'
 
 AUTHENTICATION_BACKENDS = [
 
@@ -137,8 +151,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-#STATC_ROOT
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#Default primary key field type
+#https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
