@@ -33,6 +33,7 @@
         
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Log out</a>
                     <a class="nav-item nav-link" href="{% url 'register'%}">Register</a>
+                    <a class="nav-item nav-link" href="{% url 'user-profile' user.id%}">Profile</a>
                 {% else %}
                     <a class="nav-item nav-link" href="/accounts/login">Log in</a> 
                     <a class="nav-item nav-link" href="/accounts/signup">Sign up</a> 

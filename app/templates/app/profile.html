@@ -1,36 +1,21 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<style>   
-</style>
-<div class = "container">
-    <div class="profile-user-settings">
-        <h1>
-            {{ user.username }}
-        </h1>
-        <form action="followers_count" method="POST">
-            {% csrf_token %}
-            <input type ="hidden" name="user" value="{{user}}" readdonly/>
-            <input type ="hidden" name="follower" value="{{user.username}}" readdonly/>
+{% for profile in profile3 %}
 
-            {% if follow_button_value == 'follow' %} 
-            <input type ="hidden" name="value" value="follow" readdonly/>
-        
-            <button type="submit" class="btn profile-edit-btn">Follow</button>
-            {% else %} 
-            <input type = "hidden" name=" value" value="unfollow" readdonly/>
-            <button type="submit" class="btn profile-edit-btn">Unfollow</button> 
-          {% endif %} 
-        </form>
-        <button type ="submit" class="btn profile-setting-btn" aria-label="profile-setting-btn">Followers</button>
+    <div class="block">
+        <div class="card">
+            <a href="{% url 'user-profile' profile.id %}">
+                <div class="card-content">
+                    <!-- ... More card code -->
+                    {{profile.id}}{{profile.user.username}}
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div class="profile-stats">
-        <ul>
-            <li><sapn class="profile-stat-count">{{user_followers}}</sapn> followers</li>
-            <li><sapn class="profile-stat-count">{{user_following}}</sapn> following</li>
+{% endfor %}
 
-        </ul>
-    </div>
-</div>
-{% endblock content %}
+
+
+        {% endblock content %} 
