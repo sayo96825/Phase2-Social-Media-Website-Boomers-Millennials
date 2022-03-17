@@ -1,21 +1,21 @@
 {% extends 'main.html' %}
-
 {% block content %}
 
-<style>
-    
-</style>
+{% for profile in profile3 %}
 
-<h1>
-    {{user.username}}
-</h1>
+    <div class="block">
+        <div class="card">
+            <a href="{% url 'user-profile' profile.id %}">
+                <div class="card-content">
+                    <!-- ... More card code -->
+                    {{profile.id}}{{profile.user.username}}
+                </div>
+            </a>
+        </div>
+    </div>
 
-<div>
+{% endfor %}
 
 
 
-
-
-</div>
-
-{% endblock content %}
+        {% endblock content %} 

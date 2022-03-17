@@ -6,18 +6,20 @@
  <div>
     <form method="POST" action = "">
         {% csrf_token %}
-
-        <label>Username:</label>
+        <a href = '/accounts/login'>sing in with google</a>
+        <!-- <label>Username:</label>
         <input type="text" name ="username" placeholer = "Enter Username" />
 
         <label> Password:</label>
         <input type = "password" name="password" placeholder="Enter Password"/>
 
-        <input type ="submit" value="Login" />
+        <input type ="submit" value="Login" /> -->
 
     </form>
 
     <p> Have you sign up yet? Sing up here ?</p>
+    
+    <br>
     <a href ="{% url 'register' %}"> Sign up</a>
  </div>
 
@@ -29,7 +31,7 @@
         <input type ="submit" value="Register" />
     </form>
     <p>Already sign up? You can log in here</p>
-    <a href = "{% url 'login' %}">Login</a>
+    <a href = "{% url 'login' %}">Login</a> 
  
 
 

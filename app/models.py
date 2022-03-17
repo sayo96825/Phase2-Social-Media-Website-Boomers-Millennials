@@ -1,25 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-#from django.contrib.auth.models import AbstractUser
-
-# Create your models here.
-# class User(AbstractUser):
-#     name = models.CharField(max_length=200, null=True)
-#     email = models.EmailField(unique=True, null=True)
-#     bio = models.TextField(null=True)
-
-#     avatar = models.ImageField(null=True, default="avatar.svg")
-
-#     USERNAME_FIELD = 'email'
-#     REQUIRED_FIELDS = []
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
-
 
 class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -37,7 +25,6 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
-
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -50,3 +37,21 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+        user_profile.follows.add(instance.profile)
+        user_profile.save()
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    follows = models.ManyToManyField("self", related_name="followed_by",symmetrical=False,blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    
+    
