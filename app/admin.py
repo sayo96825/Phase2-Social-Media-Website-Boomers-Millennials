@@ -1,13 +1,12 @@
 from django.contrib import admin
-
+from django.contrib.auth.models import User
 # Register your models here.
 
-from .models import Room, Topic, Message, Profile,User
+from .models import Room, Topic, Message, Profile
 
 admin.site.register(Room)
 admin.site.register(Topic)
 admin.site.register(Message)
-admin.site.register(Profile)
 
 class ProfileInline(admin.StackedInline):
     model = Profile

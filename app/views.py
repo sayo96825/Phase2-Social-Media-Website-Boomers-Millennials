@@ -24,6 +24,7 @@ def loginPage(request):
         password = request.POST.get('password')
 
         try:
+            
             user = User.objects.filter(username=username).first()
         except:
             messages.error(request, 'User does not exist')
@@ -87,43 +88,55 @@ def room(request,pk):
     context = {'room': room, 'room_messages': room_messages,'participants': participants}
     return render(request, 'app/room.html',context)
 
-def userProfile(request, pk):
-    # if not hasattr(request.user, 'profile'):
-    #     missing_profile = Profile(user=request.user)
-        # missing_profile.save()
-
-    current_user = request.GET.get('user')
-    user = User.objects.get(id=pk)
-    profile= Profile.objects.filter(pk=pk).first()
-    #logged_in_user = request.user.username
-    rooms = user.room_set.all()
-    room_messages = user.message_set.all()
-    topics = Topic.objects.all()
-    profile2 = Profile.objects.exclude(user=request.user)
+def profile_list(request):
+    
+    profiles = Profile.objects.exclude(user=request.user)
+    #profiles = Profile.objects.exclude(user=request.user)
     #folowed_by = profile.follows.exclude(user=request.user)
     #following
-    if request.method == "POST":
-        current_user_profile = request.user.profile
-        action = request.POST.get("action")
+    # if request.method == "POST":
+    #     current_user_profile = request.user.profile
+    #     action = request.POST.get("action")
        
-        print(action)
-        if action == "follow":
-            current_user_profile.follows.add(profile)
-            print('follow-save')
+    #     print(action)
+    #     if action == "follow":
+    #         current_user_profile.follows.add(profile)
+    #         print('follow-save')
             
-        elif action == "unfollow":
-            current_user_profile.follows.remove(profile)
-            print('unfollow-save')
-        current_user_profile.save()
+    #     elif action == "unfollow":
+    #         current_user_profile.follows.remove(profile)
+    #         print('unfollow-save')
+    #     current_user_profile.save()
 
-    context = {'user': user,'current_ucer':current_user, 'rooms': rooms,
-                'room_messages': room_messages, 'topics': topics,"profiles":profile,"profile2": profile2}
+    context = {"profiles":profiles}
     
     return render(request, 'app/profile_list.html', context)
 
-def profile(request):
-    profile = Profile.objects.exclude(user=request.user)
-    return render(request, "app/profile.html", {"profile3": profile})
+def profile(request, pk):
+    # if not hasattr(request.user, 'profile'):
+    #     missing_profile = Profile(user=request.user)
+        # missing_profile.save()
+    user = User.objects.get(pk=pk)
+    profile = Profile.objects.get(user=request.user)
+    current_user = request.GET.get('user')
+    #profile= Profile.objects.filter(pk=pk).first()
+    #logged_in_user = request.user.username
+    rooms = user.room_set.all()
+    room_messages = profile.message_set.all()
+    topics = Topic.objects.all()
+    if request.method == "POST":
+        current_user_profile = request.user.profile
+        data = request.POST
+        action = data.get("follow")
+        if action == "follow":
+            current_user_profile.follows.add(profile)
+        elif action == "unfollow":
+            current_user_profile.follows.remove(profile)
+        current_user_profile.save()
+    context = {"user":user,"profile":profile,"room_messages":room_messages,"rooms":rooms,"topics":topics}
+    
+
+    return render(request, "app/profile.html",context)
 
 
 @login_required(login_url='login')

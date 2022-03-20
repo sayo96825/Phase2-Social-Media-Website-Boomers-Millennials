@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+
+app_name ="app"
+
 urlpatterns = [
     path('login/', views.loginPage, name="login"),
     path ('', views.home, name = "home"),
@@ -7,10 +10,10 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerPage, name="register"),
     path('room/<str:pk>/', views.room, name="room"),
-    path('profile/<str:pk>/', views.userProfile, name="user-profile"),
-    path('profile/', views.profile, name="profile"),
+    path('profile_list/', views.profile_list, name="profile_list"),
+    path('profile/<str:pk>', views.profile, name="profile"),
     #path('accounts/profile/<str:pk>/followers_count', views.userProfile, name="user-profile"),
-    #path('profile/<str:pk>/', views.profile, name="profile"),
+    #path('profile/<str:pk>/', views.profile_list, name="user-profile"),
     path('create-room/', views.createRoom, name="create-room"),
     path('update-room/<str:pk>/', views.updateRoom, name="update-room"),
     path('delete-room/<str:pk>/', views.deleteRoom, name="delete-room"),

@@ -1,101 +1,31 @@
 {% extends 'main.html' %}
 {% block content %}
-
 <style>  
   .home-container{
         display:grid;
-        grid-template-columns: 6fr 4fr;
+        grid-template-columns:  1fr 8fr 1fr;
     } 
 </style>
-<div class = "container my-5" >
-  <div class ="container mt-5">
-  <h1> User Profile</h1>
+
+<div class="home-container">
+  {% for profile in profiles %}
+  <div></div>
+  <div>
+    <div class="card mt-3">
+    
+      <figure class="image is-48x48">
+        <img src =Boomers-1\app\static\images\admin.jpg alt ="placeholder image">
+      </figure>
+    
+      
+      <a href="{% url 'profile' profile.id %}">
+      {{profile.id}}{{profile.user.username}}
+    </a>
+    
+
 </div>
-  <div class ="home-container">
-  <div>
-    <br>
-    <form method="POST">
-      {% csrf_token %}
-      <div class="buttons has-addons">
-        
-        <button class="button is-success" name="action" value="follow">Follow</button>
-       
-      </div>
-      <br>
-    </form>
-    <form method="POST">
-      {% csrf_token %}
-      <div class="buttons has-addons">
-        
-        <button class="button is-danger" name="action" value="unfollow">Unfollow</button>
-       
-      </div>
-    </form>
-    <div class="content">
-      {% for message in profile.user.message.all %}
-          <div class="box">
-              {{ message.body }}
-              <span class="is-small has-text-grey-light">
-                  ({{ message.created_at }})
-              </span>
-          </div>
-      {% endfor %}
   </div>
-     
-  </div>
-
-  <div>
-    
-    <h2>{{ user }}'s Profile' </h2>
-        <br>
-        <img src =# alt ="placeholder image">
-        <div class="block">
-        <a href="{% url 'profile' %}">
-          
-          <button class="button is-dark is-outlined is-fullwidth my-5">
-              All Profiles
-          </button>
-        </a>
-        </div>
-            <div class ="card">
-                    <div class="card-content">
-                      <div class="media">
-                        <div class="media-left">
-                          <figure class="image is-48x48">
-                          </figure>
-                        </div>
-                        
-                        <ul>
-                          <h3 style="font-size: large"> {{ user }} follows </h3>
-                          {% for following in profiles.follows.all %}
-                          <li>
-                            <a href = "{% url 'user-profile' following.id %}"> {{ following }} </a>
-                            
-                            </li>
-                          {% endfor %}
-                          </ul>           
-                            <hr>
-                            <ul>
-                          <h3 style ="font-size: large">{{ user }} is followed by </h3>
-                          {% for follower in profiles.followed_by.all %} 
-                          
-                          <li>
-                            <a href ="{% url 'user-profile' follower.id %}"> {{ follower }} </a>
-                          
-                          </li>
-                    
-                          {% endfor %}
-                        </ul>                         
-                
-                  </div>
-                </a>
-                <br>
-              
-            </div>
-        </div>
-    
-      </div>
-
-  </div>
-  </div>
-{% endblock content %}
+<div></div>
+{% endfor %}
+</div>
+{% endblock content %} 
