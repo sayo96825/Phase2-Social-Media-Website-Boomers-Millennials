@@ -45,13 +45,13 @@
   </div>
 
   <div>
-    
-    <h2>{{ user }}'s Profile' </h2>
+    {% if request.user.is_authenticated %}
+    <h2>{{ user.username }}'s Profile' </h2>
         <br>
         <img src =# alt ="placeholder image">
         <div class="block">
         <a href="{% url 'profile' %}">
-          
+      {% endif %}    
           <button class="button is-dark is-outlined is-fullwidth my-5">
               All Profiles
           </button>

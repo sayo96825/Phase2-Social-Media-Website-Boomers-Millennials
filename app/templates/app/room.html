@@ -5,19 +5,19 @@
 <style>
     .room-container{
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 0.5fr 3fr 0.5fr 1fr;
     }
 </style>
 
 <div class = "room-container">
-
+    <div></div>
     <div>
 
         <h3>{{room.name}}</h3>
         <p> {{room.description}}</p>
 
-        <div class ="comment-wapper">
-
+        <div class ="comment-wapper my-5">
+            
             <h4>Conversation</h4>
             <hr>
             {% for message in room_messages %}
@@ -42,7 +42,7 @@
         </div>
         {% endif %}
     </div>
-
+    <div></div>
     <div>
         
         <h4>Participants</h4>
