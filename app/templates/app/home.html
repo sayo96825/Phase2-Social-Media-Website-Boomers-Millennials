@@ -6,23 +6,27 @@
         grid-template-columns: 1fr 0.25fr 2.5fr 0.25fr 1fr;
     }
 </style>
-<div class = "container my-5">
-    <div class = "home-container">
+<div class="container my-5">
+    <div class="home-container">
         <div class="topic_header"  >
-            <h3> Topics</h3>
+            <h3>Topics</h3>
             <ul class="topics_list my-3">
             <li>
-                <a href="{% url 'home' %}" class= "active">All <span>{{ topic.count }}</span></a>
+                <a href="{% url 'home' %}" class="active">All <span>{{ topic.count }}</span></a>
             </li>
-
-                {% for topic in topics %}
-                <li>
-                    <a href = "{% url 'home' %}?q={{topic.name}}">{{ topic.name }} <span>{{ topic.room_set.all.count }}</span></a>
-                </li>
-                {% endfor %}
+            {% for topic in topics %}
+                {% if user.is_authenticated %}
+                    <li>  
+                        <a href="{% url 'home' %}?q={{topic.name}}">{{ topic.name }}  <span>{{ topic.room_set.all.count }}</span></a>  
+                    </li>
+                {% else %}  
+                    <a href="{% url 'login' %} ">{{ topic.name }}</a>
+                    <br>
+                {% endif %}
+            {% endfor %}        
             </ul>
         </div>
-    <div>  </div>
+        <div>  </div>
         <div>
             <br>
             <h5>{{room_count}} rooms available </h5>
@@ -40,11 +44,18 @@
                     &ensp;<a href = "{% url 'delete-room' room.id %}">Delete</a>
                     {% endif %}
                     <br>
+
+                    {% if user.is_authenticated %}
                     <a href = "{% url 'user-profile' room.host.id %}">@{{ room.host.username }} </a>
                      &emsp;{{ room.created }}
+                     <h5> {{ room.id }} -- <a href= "{% url 'room' room.id %}">{{ room.name }}</a> </h5>
+                     <small> {{ room.topic.name }}</small>
+                     <hr>
+                    {% else %}
                     <h5> {{ room.id }} -- <a href= "{% url 'room' room.id %}">{{ room.name }}</a> </h5>
                     <small> {{ room.topic.name }}</small>
                     <hr>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -57,19 +68,21 @@
             <br>
             <h4>Recent Activity</h4>
             <hr>
+            {% if user.is_authenticated %}
             {% for message in room_messages %}
             <div>
-                
                 <small><a href ="{% url 'user-profile' message.user.id %}"> @{{ message.user }} {{ message.created|timesince }}</small>
                 <small>replied to "{{ message.room }} "</small>
-
                 <p>{{ message }}</p>
+                <hr>
                 {% if request.user == mesage.user %} 
                 <a href = "{% url 'delete-message' message.id %}"> Delete</a>
                 {% endif %}
-                <hr>
             </div>
             {% endfor %}
+            {% else %} 
+            <P> please log in to see recent activity by registred users</P>
+            {% endif %}
         </div>
     </div>
 </div>

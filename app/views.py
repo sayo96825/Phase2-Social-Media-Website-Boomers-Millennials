@@ -24,6 +24,7 @@ def loginPage(request):
         password = request.POST.get('password')
 
         try:
+            
             user = User.objects.filter(username=username).first()
         except:
             messages.error(request, 'User does not exist')
