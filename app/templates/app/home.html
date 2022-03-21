@@ -3,7 +3,7 @@
 <style>
     .home-container{
         display:grid;
-        grid-template-columns: 1fr 0.25fr 2.5fr 0.25fr 1fr;
+        grid-template-columns: 1.25fr 0.25fr 2.5fr 0.25fr 1.5fr;
     }
 </style>
 <div class="container my-5">
@@ -12,12 +12,14 @@
             <h3>Topics</h3>
             <ul class="topics_list my-3">
             <li>
-                <a href="{% url 'home' %}" class="active">All <span>{{ topic.count }}</span></a>
+                <a href="{% url 'home' %}" class="active">All </a><span> &emsp;{{ topic.count }}</span>
             </li>
             {% for topic in topics %}
                 {% if user.is_authenticated %}
                     <li>  
-                        <a href="{% url 'home' %}?q={{topic.name}}">{{ topic.name }}  <span>{{ topic.room_set.all.count }}</span></a>  
+                        <a href="{% url 'home' %}?q={{topic.name}}">{{ topic.name }} </a> 
+
+                        <span>&emsp;{{ topic.room_set.all.count }} rooms</span>
                     </li>
                 {% else %}  
                     <a href="{% url 'login' %} ">{{ topic.name }}</a>
@@ -39,7 +41,7 @@
             <hr>
             <div>
                 {% for room in rooms %}
-                <div>
+                <div class="card my-4">
                     {% if request.user == room.host %}
                     <a href = "{% url 'update-room' room.id %}">Edit</a>
                     &ensp;<a href = "{% url 'delete-room' room.id %}">Delete</a>
@@ -47,6 +49,7 @@
                     <br>
 
                     {% if user.is_authenticated %}
+        
                     hosted by @{{ room.host.username }}<br>
                     created on {{ room.created }}<br>
                     <br>
@@ -58,25 +61,28 @@
                     <small> {{ room.topic.name }}</small>
                     <hr>
                     {% endif %}
+                    &emsp; {{room.participants.all.count}} Joined
                 </div>
                 {% endfor %}
             </div>
         </div>
         <div> </div>
         <div>
+            <div class ="container">
             <h4>Help</h4>
             <a href = http://localhost:8000/room/4/ >Ask for help here</a>
-            <br>
-            <br>
-            <h4>Recent Activity</h4>
+            
+            
+        </div>
+            <div class="container my-5">
+            <h4>New Posts</h4>
             <hr>
             {% if user.is_authenticated %}
-            {% for room in rooms %}
             {% for message in room_messages %}
 
             <div>
                 <small><a href ="{% url 'user-profile' message.user.id %}"> @{{ message.user }} </a> {{ message.created|timesince }}</small><br>
-                <small><a href= "{% url 'room' room.id %}">{{ room.name }}</a> replied to "{{ message.room }} "</small>
+                <small> replied to {{ message.room }}</a></small>
                 <p>{{ message }}</p>
                 <hr>
                 {% if request.user == message.user %} 
@@ -84,10 +90,10 @@
                 {% endif %}
             </div>
             {% endfor %}
-            {% endfor %}
             {% else %} 
-            <P> please log in to see recent activity by registred users</P>
+            <P> please log in to see recent activity by registered users</P>
             {% endif %}
+        </div>
         </div>
     </div>
 </div>

@@ -3,8 +3,10 @@
 
 {% if page == 'login' %}
 
- <div>
+ <div class ="container my-5">
     <form method="POST" action = "">
+        <p> Have you sign up yet? Sing up here ?</p>
+        
         {% csrf_token %}
         <a href = '/accounts/login'>sing in with google</a>
         <!-- <label>Username:</label>
@@ -17,7 +19,6 @@
 
     </form>
 
-    <p> Have you sign up yet? Sing up here ?</p>
     
     <br>
     <a href ="{% url 'register' %}"> Sign up</a>
@@ -32,10 +33,6 @@
     </form>
     <p>Already sign up? You can log in here</p>
     <a href = "{% url 'login' %}">Login</a> 
- 
-
-
-
     
  </div>
 {% endif %}
