@@ -69,7 +69,7 @@ def home(request):
         Q(description__icontains=q))
     topics = Topic.objects.all()
     room_count = rooms.count()
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))#[0:3]
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:5]
     context = {'rooms': rooms,'topics': topics,'room_count': room_count, 'room_messages': room_messages}
     return render(request, 'app/home.html',context)
 
@@ -94,11 +94,11 @@ def userProfile(request, pk):
         # missing_profile.save()
 
     current_user = request.GET.get('user')
-    user = User.objects.get(id=pk)
+    user = Profile.objects.filter(pk=pk).first()
     profile= Profile.objects.filter(pk=pk).first()
     #logged_in_user = request.user.username
-    rooms = user.room_set.all()
-    room_messages = user.message_set.all()
+    #rooms = user.room_set.all()
+    #room_messages = user.message_set.all()
     topics = Topic.objects.all()
     profile2 = Profile.objects.exclude(user=request.user)
     #folowed_by = profile.follows.exclude(user=request.user)
@@ -117,8 +117,7 @@ def userProfile(request, pk):
             print('unfollow-save')
         current_user_profile.save()
 
-    context = {'user': user,'current_ucer':current_user, 'rooms': rooms,
-                'room_messages': room_messages, 'topics': topics,"profiles":profile,"profile2": profile2}
+    context = {'user': user,'current_user':current_user, 'topics': topics,"profiles":profile,"profile2": profile2}
     
     return render(request, 'app/profile_list.html', context)
 
