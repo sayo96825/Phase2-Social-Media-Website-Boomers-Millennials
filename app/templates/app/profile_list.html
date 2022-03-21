@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
 
 <style>  
@@ -45,13 +46,13 @@
   </div>
 
   <div>
-    {% if request.user.is_authenticated %}
-    <h2>{{ user.username }}'s Profile' </h2>
+    
+    <h2>{{ user }}'s Profile' </h2>
         <br>
-        <img src =# alt ="placeholder image">
+        <img src ="{% static 'images/admin.jpg' %}" alt ="placeholder image" height =100px>
         <div class="block">
         <a href="{% url 'profile' %}">
-      {% endif %}    
+          
           <button class="button is-dark is-outlined is-fullwidth my-5">
               All Profiles
           </button>
@@ -68,22 +69,25 @@
                         <ul>
                           <h3 style="font-size: large"> {{ user }} follows </h3>
                           {% for following in profiles.follows.all %}
+                            {% if following != user %}
                           <li>
                             <a href = "{% url 'user-profile' following.id %}"> {{ following }} </a>
                             
                             </li>
+                            {% endif %}
                           {% endfor %}
                           </ul>           
                             <hr>
                             <ul>
                           <h3 style ="font-size: large">{{ user }} is followed by </h3>
                           {% for follower in profiles.followed_by.all %} 
+                              {% if follower != user %}
                           
                           <li>
                             <a href ="{% url 'user-profile' follower.id %}"> {{ follower }} </a>
                           
                           </li>
-                    
+                            {% endif %}
                           {% endfor %}
                         </ul>                         
                 
