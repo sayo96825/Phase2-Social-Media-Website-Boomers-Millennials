@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<div>
+<div class = "container">
     <form class="form" action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}

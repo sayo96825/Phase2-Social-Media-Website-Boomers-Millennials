@@ -5,24 +5,27 @@
 <style>  
   .home-container{
         display:grid;
-        grid-template-columns: 6fr 4fr;
+        grid-template-columns: 1fr 4fr 4fr;
     } 
 </style>
 <div class = "container my-5" >
-  <div class ="container mt-5">
+  <div class ="container my-5">
   <h1> User Profile</h1>
 </div>
   <div class ="home-container">
+    <div></div>
   <div>
-    <br>
+    
+    <h2>{{ user }}'s Profile' </h2>
+        <br>
+        <img src ="{% static 'images/admin.jpg' %}" alt ="placeholder image" height =200px>
     <form method="POST">
       {% csrf_token %}
-      <div class="buttons has-addons">
+      <div class="buttons has-addons my-5">
         
         <button class="button is-success" name="action" value="follow">Follow</button>
        
       </div>
-      <br>
     </form>
     <form method="POST">
       {% csrf_token %}
@@ -47,9 +50,7 @@
 
   <div>
     
-    <h2>{{ user }}'s Profile' </h2>
-        <br>
-        <img src ="{% static 'images/admin.jpg' %}" alt ="placeholder image" height =100px>
+    
         <div class="block">
         <a href="{% url 'profile' %}">
           
