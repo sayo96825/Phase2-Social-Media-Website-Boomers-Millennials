@@ -13,11 +13,20 @@
     }
 </style>
 <div class ="container">
+    {% if request.user %}
+     <a href="{% url 'user-profile' request.user.id %}">
+   {{request.user}}'s profile</a>
+   {% endif %}
+ </div>
+<div class ="container">
 <h1> User list</h1>
 <br>
 <P> <b>This is the list of users. Click on the link of the user to check their profile and to follow.</b></P>
 </div>
+
+
 {% for profile in profile3 %}
+
 <div class ="home-container">
     <div></div>
         <div class="card my-2">
@@ -41,6 +50,4 @@
 </div>
 {% endfor %}
 
-
-
-        {% endblock content %} 
+{% endblock content %} 
