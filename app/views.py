@@ -58,9 +58,9 @@ def home(request):
     rooms = Room.objects.filter(Q(topic__name__icontains=q) |
                                 Q(name__icontains=q) |
                                 Q(description__icontains=q))
-    topics = Topic.objects.all()[0:7]
+    topics = Topic.objects.all()
     room_count = rooms.count()
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:5]
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
     context = {'rooms': rooms,'topics': topics,'room_count': room_count, 'room_messages': room_messages}
     return render(request, 'app/home.html',context)
 
@@ -108,8 +108,10 @@ def userProfile(request, pk):
     return render(request, 'app/profile_list.html', context)
 
 def profile(request):
+    user= Profile.objects.filter(user=request.user).first()
+    logged_in_user = request.user.username
     profile = Profile.objects.exclude(user=request.user)
-    return render(request, "app/profile.html", {"profile3": profile})
+    return render(request, "app/profile.html", {"profile3": profile,'user':logged_in_user})
 
 @login_required(login_url='login')
 def createRoom(request):
@@ -132,14 +134,14 @@ def createRoom(request):
             description=request.POST.get('description'),
         )
         return redirect('home')
-    context =  {'form': form,'topics': topic}
+    context =  {'form': form,'topics': topics}
     return render(request, 'app/room_form.html', context)
 
 @login_required(login_url='login')
 def updateRoom(request, pk):
     room = Room.objects.filter(id=pk).first()
     form = RoomForm(instance=room)
-#     topics = Topic.objects.all()
+    topics = Topic.objects.all()
     if request.user != room.host:
         return HttpResponse('Your need to be a host!!')
 
@@ -156,7 +158,7 @@ def updateRoom(request, pk):
         room.save()
         return redirect('home')
 
-    context = {'form': form}#'topics': topics, 'room': room}
+    context = {'form': form,'topics': topics, 'room': room}
     return render(request, 'app/room_form.html', context)
 
 @login_required(login_url='login')
