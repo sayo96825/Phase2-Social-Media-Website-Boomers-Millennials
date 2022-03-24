@@ -55,7 +55,7 @@ class Profile(models.Model):
     name =models.CharField(max_length=200, null=True)
     follows = models.ManyToManyField("self", related_name="followed_by",symmetrical=False,blank=True)
     bio = models.TextField(null=True, blank=True)
-    image = models.ImageField(null=True, blank =True, default='default-profile-image.png')
+    image = models.ImageField(null=True, blank =True, upload_to='images', default='default-profile-image.png')
     skill = models.CharField(max_length =100, null=True,blank=True)
 
     

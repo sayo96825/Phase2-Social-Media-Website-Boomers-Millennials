@@ -13,13 +13,13 @@
         grid-template-columns: 0.5fr 3fr 5.5fr;
     }
 </style>
-<div class ="container">
+<div class ="container my-5">
+    <h1> Your profile </h1>
     {% if request.user %}
-     <a href="{% url 'user-profile' request.user.id %}">
-   {{request.user}}'s profile</a>
+     <a href="{% url 'user-profile' user.id %}"> {{request.user}}'s profile</a>
    {% endif %}
  </div>
-<div class ="container">
+<div class ="container my-5">
 <h1> User list</h1>
 <br>
 <P> <b>This is the list of users. Click on the link of the user to check their profile and to follow.</b></P>

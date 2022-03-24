@@ -25,9 +25,11 @@
                         <span>&emsp;{{ topic.room_set.all.count }} rooms</span>
                     </li>
                     <br>
+
                 {% else %}  
                     <a href="{% url 'login' %} ">{{ topic.name }}</a>
                     <br>
+                    <hr>
                 {% endif %}
             {% endfor %}        
             </ul>
@@ -78,7 +80,7 @@
             <div class="container my-5">
             <h4>New Posts</h4>
             <hr>
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             {% for message in room_messages %}
 
             <div>
