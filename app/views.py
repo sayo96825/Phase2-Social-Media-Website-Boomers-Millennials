@@ -201,11 +201,11 @@ def updateUser(request):
         if form.is_valid():
             form.save()
             return redirect('user-profile', pk=user.id)
-        # Profile.objects.create(
-        #     bio = request.POST.get('bio'),
-        #     image = request.POST.get('image'),
-        #     skill = request.POST.get('skill'),
-        # )
+        Profile.objects.create(
+            bio = request.POST.get('bio'),
+            image = request.POST.get('image'),
+            skill = request.POST.get('skill'),
+        )
         return redirect('user-profile', pk=user.id)
     context ={'form': form } 
         #context =  {'form': form}
