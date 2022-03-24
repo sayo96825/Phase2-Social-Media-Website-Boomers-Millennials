@@ -4,11 +4,11 @@
 
 <div>
     <div class = "container">
-    <form method="POST action=">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Update" />
-    </form>
-</div>
+        <form method="POST" action="" enctype="multipart/form-date">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input class="btn btn-primary" type="submit" name="Update Information">
+          </form>
+    </div>
 </div>
 {% endblock content %} 
