@@ -15,7 +15,10 @@
     <div>
       <h2>{{ user|upper }}'s Profile </h2>
           <br>
-          <img src ="{% static 'images/admin.jpg' %}" alt ="placeholder image" height =200px>
+          <img src ="{{Profile.image.url}}" alt ="placeholder image" height =200px>
+
+          <p>Bio</p>
+           {{user.bio}}
       <form method="POST">
         {% csrf_token %}
         <div class="buttons has-addons my-5">
@@ -42,9 +45,11 @@
       </div>    
     </div>
     <div>  
-        <a href="{% url 'profile' %}">
-          <button class="button is-dark is-outlined is-fullwidth my-5">All Profiles</button>
+      
+        <a href = "{% url 'update-user'%}">
+          <button class="button is-dark is-outlined is fullwidth my-5">Edit my profile</button>
         </a>
+      
           <div class ="card" >
             <div class="card-content">      
                 <figure class="image is-48x48"></figure>               

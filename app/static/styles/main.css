@@ -1,4 +1,3 @@
-
 .search-wrapper {
     display: flex;
     flex-direction: column;
@@ -14,6 +13,8 @@
     }
   }
   
-body{ background-color:rgb(231, 234, 238);
+body { 
+    background-color:rgb(231, 234, 238);
+    font-family:Tahoma;
 
 }

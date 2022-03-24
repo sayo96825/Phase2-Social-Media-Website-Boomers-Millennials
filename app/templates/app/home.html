@@ -37,18 +37,14 @@
             <br>
             <h5>{{room_count}} rooms available </h5>
             <br>
-            <a href = "{% url 'create-room' %}" >
-                <button class ="button is-dark is outlined is fullwidth">Create Room
-
-            </a>
-                </button>
             <hr>
             <div>
                 {% for room in rooms %}
                 <div class="card my-4">
+                    <div class="container">
                     {% if request.user == room.host %}
-                    <a href = "{% url 'update-room' room.id %}">Edit</a>
-                    &ensp;<a href = "{% url 'delete-room' room.id %}">Delete</a>
+                    <a href = "{% url 'update-room' room.id %}">Edit room</a>
+                    &ensp;<a href = "{% url 'delete-room' room.id %}">Delete room</a>
                     {% endif %}
                     <br>
 
@@ -66,6 +62,7 @@
                     <hr>
                     {% endif %}
                     &emsp; {{room.participants.all.count}} Joined
+                </div>
                 </div>
                 {% endfor %}
             </div>

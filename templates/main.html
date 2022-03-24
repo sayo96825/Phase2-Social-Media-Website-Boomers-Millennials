@@ -25,6 +25,7 @@
               <div class="navbar-nav">
                   {% if request.user.is_authenticated %}
                   <!--   <a class="nav-item nav-link" href="{% url 'register'%}">Register</a>-->
+                  <a class="nav-item nav-link" href="{% url 'create-room' %}">Create room</a> &emsp;
                   <a class="nav-item nav-link" href="{% url 'profile'%}">User List</a> &emsp;
                   <a class="nav-item nav-link" href="{% url 'user-profile' request.user.id%}">My Profile</a> &emsp;
                   <a class="nav-item nav-link" href="{% url 'logout'%}">Log out</a> &emsp;

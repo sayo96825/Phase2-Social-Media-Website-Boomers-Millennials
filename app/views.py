@@ -8,7 +8,7 @@ from django.contrib.auth.models import User,auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic, Message, Profile
-from.forms import RoomForm, UserForm
+from.forms import RoomForm, UserForm, ProfileUpdateForm
 
 # Create your views here.
 
@@ -40,9 +40,9 @@ def logoutUser(request):
 
 def registerPage(request):
     page = "register"
-    form = UserForm()
+    form = UserCreationForm()
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
@@ -188,15 +188,22 @@ def deleteMessage(request, pk):
 @login_required(login_url='login')
 def updateUser(request):
     user = request.user
-    form = UserForm(instance=user)
+    form = ProfileUpdateForm(instance=user)
 
     if request.method == 'POST':
-        form = UserForm(request.POST, request.FILES, instance=user)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user-profile', pk=user.id)
-
-    return render(request, 'app/update-user.html', {'form': form})
+        Profile.objects.create(
+            bio = request.POST.get('bio'),
+            image = request.POST.get('image'),
+            skill = request.POST.get('skill'),
+        )
+        return redirect('user-profile', pk=user.id)
+    context ={'form': form } 
+        #context =  {'form': form}
+    return render(request, 'app/update-user.html', context)
 
 
 
