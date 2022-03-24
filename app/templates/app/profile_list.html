@@ -24,13 +24,13 @@
     {{request.user}} -->
 
     {% if user %} 
-    <h2>{{ profile }}'s Profile </h2>
+    <h2>{{ profiles.user }}'s Profile </h2>
     <!-- left column -->
     <div class ="card my-5" >
       <div class="card-content">                    
                 <ul>
                   
-                  <h3 style="font-size: large"> {{ user }} follows </h3>
+                  <h3 style="font-size: large"> {{ profiles.user }} follows </h3>
                     {% for following in profiles.follows.all %}
                       {% if following != profiles %}
                         <li>
@@ -41,7 +41,7 @@
                 </ul>           
                     <hr>
                 <ul>
-                  <h3 style ="font-size: large">{{ user }} is followed by </h3>
+                  <h3 style ="font-size: large">{{ profiles.user }} is followed by </h3>
                     {% for follower in profiles.followed_by.all %} 
                       {% if follower != profiles %}            
                         <li>
