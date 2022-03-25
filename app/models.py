@@ -57,8 +57,8 @@ class Profile(models.Model):
     bio = models.TextField(null=True, blank=True)
     image = models.ImageField(null=True, blank =True, upload_to='images', default='default-profile-image.png')
     skill = models.CharField(max_length =100, null=True,blank=True)
+    generation = models.CharField(max_length =50, null=True,blank=True)
 
-    
     USERNAME_FIELD = 'user'
     REQUIRED_FIELDS = []    
     def __str__(self):

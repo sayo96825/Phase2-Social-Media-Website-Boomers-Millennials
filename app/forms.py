@@ -22,4 +22,4 @@ class UserForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model =Profile
-        fields = ['image', 'skill','bio']
+        fields = ['image', 'generation','skill','bio']
