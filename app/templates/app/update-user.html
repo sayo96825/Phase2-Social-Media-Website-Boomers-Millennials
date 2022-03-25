@@ -2,5 +2,28 @@
 
 {% block content %}
 
+<div>
 
+    <a href="{% url 'user-profile' user.id %}"> </a>
+    <div class = "container">
+        <form method="POST" action=""  enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+          
+            <div class="form__group">
+                <label for="image">{{field.label}}</label>
+                {{field}}
+              </div>
+              
+              {% endfor %}
+
+              <div class="form__action">
+                <a class="btn btn--dark" href="{% url 'profile' %}">Cancel</a>
+                <input class="btn btn-primary" type="submit" name="Update Information">
+              </div>
+            
+          
+          </form>
+    </div>
+</div>
 {% endblock content %} 

@@ -1,9 +1,10 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
 <style>
     .home-container{
         display:grid;
-        grid-template-columns: 1.25fr 0.25fr 2.5fr 0.25fr 1.5fr;
+        grid-template-columns: 1fr 0.25fr 2.5fr 0.25fr 2fr;
     }
     
 
@@ -25,9 +26,11 @@
                         <span>&emsp;{{ topic.room_set.all.count }} rooms</span>
                     </li>
                     <br>
+
                 {% else %}  
                     <a href="{% url 'login' %} ">{{ topic.name }}</a>
                     <br>
+                    <hr>
                 {% endif %}
             {% endfor %}        
             </ul>
@@ -37,18 +40,14 @@
             <br>
             <h5>{{room_count}} rooms available </h5>
             <br>
-            <a href = "{% url 'create-room' %}" >
-                <button class ="button is-dark is outlined is fullwidth">Create Room
-
-            </a>
-                </button>
             <hr>
             <div>
                 {% for room in rooms %}
                 <div class="card my-4">
+                    <div class="container">
                     {% if request.user == room.host %}
-                    <a href = "{% url 'update-room' room.id %}">Edit</a>
-                    &ensp;<a href = "{% url 'delete-room' room.id %}">Delete</a>
+                    <a href = "{% url 'update-room' room.id %}">Edit room</a>
+                    &ensp;<a href = "{% url 'delete-room' room.id %}">Delete room</a>
                     {% endif %}
                     <br>
 
@@ -67,6 +66,7 @@
                     {% endif %}
                     &emsp; {{room.participants.all.count}} Joined
                 </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -74,14 +74,19 @@
         <div>
             <div class ="container">
             <h4>Help</h4>
+           
+
+            <video width ='320' controls>
+                <source src ="{% static 'images/Boomers - Google Chrome 2022-03-25 06-24-30.mp4' %}" type='video/mp4'> </source>
+                Video
+            </video>
+            
             <a href = http://localhost:8000/room/4/ >Ask for help here</a>
-            
-            
         </div>
             <div class="container my-5">
             <h4>New Posts</h4>
             <hr>
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             {% for message in room_messages %}
 
             <div>

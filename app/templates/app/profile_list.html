@@ -1,21 +1,113 @@
 {% extends 'main.html' %}
 {% load static %}
-{% block content %}
 
-<style>  
-  .home-container{
-        display:grid;
-        grid-template-columns: 1fr 4fr 4fr;
-    } 
-</style>
-<div class = "container my-5" >
+<!DOCTYPE html>
+<html lang="en">
+{% block content %}
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block additionalStyles %}
+    <link rel="stylesheet" href="{% static 'images/' %}"/> 
+    {% endblock %}
+    <style>  
+      .home-container{
+            display:grid;
+            grid-template-columns: 0.5fr 4fr 0.5fr 4fr;
+        } 
+    </style>
+  </head>
+  <body>
+
+<div class = "container my-5 padding-bottom= 20pxs" >
 
   <div class ="home-container">
     <div></div>
     <div>
-      <h2>{{ user|upper }}'s Profile </h2>
-          <br>
-          <img src ="{% static 'images/admin.jpg' %}" alt ="placeholder image" height =200px>
+    <!-- {{profile2}}
+    <p>a</p>
+    {{user}}
+    <p>b</p>
+    {{profile}}
+    <p>user name{{user.username}}</p>
+    <p>dd</p>
+    {{request.user}} -->
+
+    {% if user %} 
+    <h2>{{ profiles.user }}'s Profile </h2>
+    <!-- left column -->
+    <div class ="card my-5" >
+      <div class="card-content">                    
+                <ul>
+                  
+                  <h3 style="font-size: large"> {{ profiles.user }} follows </h3>
+                    {% for following in profiles.follows.all %}
+                      {% if following != profiles %}
+                        <li>
+                          <a href = "{% url 'user-profile' following.id %}"> {{ following }} </a>                     
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+                </ul>           
+                    <hr>
+                <ul>
+                  <h3 style ="font-size: large">{{ profiles.user }} is followed by </h3>
+                    {% for follower in profiles.followed_by.all %} 
+                      {% if follower != profiles %}            
+                        <li>
+                          <a href ="{% url 'user-profile' follower.id %}"> {{ follower }} </a>            
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+              
+                </ul>                         
+            
+          </a>
+        
+        </div>
+    </div>  
+    {% else %}
+
+  
+    <h2> {{request.user}} pofile</h2>
+    <div class ="card my-5" >
+      <div class="card-content ">                    
+                <ul>
+                  
+                  <h3 style="font-size: large"> {{ request.user }} follows </h3>
+                
+                  
+                    {% for following in profiles.follows.all %}
+                      {% if following != profiles %}
+                        <li>
+                          <a href = "{% url 'user-profile' following.id %}"> {{ following }} </a>                     
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+                </ul>           
+                    <hr>
+                <ul>
+                  <h3 style ="font-size: large">{{ request.user }} is followed by </h3>
+                    {% for follower in profiles.followed_by.all %} 
+                      {% if follower != profiles %}            
+                        <li>
+                          <a href ="{% url 'user-profile' follower.id %}"> {{ follower }} </a>            
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+              
+                </ul>                         
+            
+          </a>
+        
+        </div>
+    </div>  
+   
+    
+    {% endif %}
+
+         
       <form method="POST">
         {% csrf_token %}
         <div class="buttons has-addons my-5">
@@ -41,44 +133,39 @@
         {% endfor %}
       </div>    
     </div>
+    <!-- end of left column-->
+    <div></div>
+    <!-- right column -->
     <div>  
-        <a href="{% url 'profile' %}">
-          <button class="button is-dark is-outlined is-fullwidth my-5">All Profiles</button>
-        </a>
-          <div class ="card" >
-            <div class="card-content">      
-                <figure class="image is-48x48"></figure>               
-                      <ul>
-                        <h3 style="font-size: large"> {{ user }} follows </h3>
-                          {% for following in profiles.follows.all %}
-                            {% if following != user %}
-                              <li>
-                                <a href = "{% url 'user-profile' following.id %}"> {{ following }} </a>                     
-                              </li>
-                            {% endif %}
-                          {% endfor %}
-                      </ul>           
-                          <hr>
-                      <ul>
-                        <h3 style ="font-size: large">{{ user }} is followed by </h3>
-                          {% for follower in profiles.followed_by.all %} 
-                            {% if follower != user %}            
-                              <li>
-                                <a href ="{% url 'user-profile' follower.id %}"> {{ follower }} </a>            
-                              </li>
-                            {% endif %}
-                          {% endfor %}
-                      </ul>                         
-                  
-                </a>
-              
-              </div>
-
-          </div>  
-
-
-          
+      <p>
+    <a href = "{% url 'update-user' %}">
+      <button class="button is-dark is-outlined is fullwidth my-5">Edit my profile</button>
+    </a>  
+  </p>  
+      {% if user.image %}
+        <img src ="{{user.image.url}}" alt ="placeholder image" height =200px /> 
+        {% endif %}
+      <div class ="card my-5" >
+        Generation
+        <hr>
+          {{user.generation}}
+    </div>
+      
+      <div class ="card my-5" >
+          Bio
+          <hr>
+           {{user.bio}}
+      </div>
+      <div class ="card my-5" >
+        Skill
+        <hr>
+         {{user.skill}}
+      </div>
+           
    </div>
+   <!-- left column -->
   </div>
+  {% endblock content %}
 </div>
-{% endblock content %}
+</body>
+</html>

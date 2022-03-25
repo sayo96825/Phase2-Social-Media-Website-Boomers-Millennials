@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+
+
 class Topic(models.Model):
     name = models.CharField(max_length=200)
 
@@ -46,13 +49,20 @@ def create_profile(sender, instance, created, **kwargs):
         user_profile.follows.add(instance.profile)
         user_profile.save()
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    follows = models.ManyToManyField("self", related_name="followed_by",symmetrical=False,blank=True)
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    name =models.CharField(max_length=200, null=True)
+    follows = models.ManyToManyField("self", related_name="followed_by",symmetrical=False,blank=True)
+    bio = models.TextField(null=True, blank=True)
+    image = models.ImageField(null=True, blank =True, upload_to='images', default='default-profile-image.png')
+    skill = models.CharField(max_length =100, null=True,blank=True)
+    generation = models.CharField(max_length =50, null=True,blank=True)
+
+    USERNAME_FIELD = 'user'
+    REQUIRED_FIELDS = []    
     def __str__(self):
-        
-        return self.user.username
+        return str(self.user) 
 
     
     
