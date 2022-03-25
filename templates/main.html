@@ -28,9 +28,8 @@
                   {% if request.user.is_authenticated %}
                   <!--   <a class="nav-item nav-link" href="{% url 'register'%}">Register</a>-->
                   <a class="nav-item nav-link" href="{% url 'create-room' %}">Create room</a> &emsp;
-                  <a class="nav-item nav-link" href="{% url 'profile'%}">User List</a> &emsp;
-                   {#<a class="nav-item nav-link" href="{% url 'user-profile' request.user.id%}">My Profile</a> &emsp; #}
-                  <a class="nav-item nav-link" href="{% url 'logout'%}">Log out</a> &emsp;
+                  <a class="nav-item nav-link" href="{% url 'profile'%}">Profile & User List</a> &emsp;
+                   <a class="nav-item nav-link" href="{% url 'logout'%}">Log out</a> &emsp;
           
                   {% else %}
                       <a class="nav-item nav-link" href="/accounts/login">Log in</a> 

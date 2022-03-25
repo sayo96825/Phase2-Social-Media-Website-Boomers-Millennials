@@ -137,7 +137,14 @@
     <div></div>
     <!-- right column -->
     <div>  
+      <p>
+    <a href = "{% url 'update-user' %}">
+      <button class="button is-dark is-outlined is fullwidth my-5">Edit my profile</button>
+    </a>  
+  </p>  
+      {% if user.image %}
         <img src ="{{user.image.url}}" alt ="placeholder image" height =200px /> 
+        {% endif %}
       <div class ="card my-5" >
         Generation
         <hr>
@@ -154,9 +161,7 @@
         <hr>
          {{user.skill}}
       </div>
-        <a href = "{% url 'update-user' %}">
-          <button class="button is-dark is-outlined is fullwidth my-5">Edit my profile</button>
-        </a>          
+           
    </div>
    <!-- left column -->
   </div>

@@ -49,9 +49,7 @@ def registerPage(request):
             user.username = user.username.lower()
             Profile.objects.create(
                 user=user
-
-            )
-             
+            )   
             login(request, user)
             return redirect('home')
         else:

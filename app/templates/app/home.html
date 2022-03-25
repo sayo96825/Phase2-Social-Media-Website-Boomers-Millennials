@@ -1,9 +1,10 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
 <style>
     .home-container{
         display:grid;
-        grid-template-columns: 1.25fr 0.25fr 2.5fr 0.25fr 1.5fr;
+        grid-template-columns: 1fr 0.25fr 2.5fr 0.25fr 2fr;
     }
     
 
@@ -73,9 +74,14 @@
         <div>
             <div class ="container">
             <h4>Help</h4>
+           
+
+            <video width ='320' controls>
+                <source src ="{% static 'images/Boomers - Google Chrome 2022-03-25 06-24-30.mp4' %}" type='video/mp4'> </source>
+                Video
+            </video>
+            
             <a href = http://localhost:8000/room/4/ >Ask for help here</a>
-            
-            
         </div>
             <div class="container my-5">
             <h4>New Posts</h4>
