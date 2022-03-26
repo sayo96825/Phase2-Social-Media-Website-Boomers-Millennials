@@ -1,21 +1,53 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
-
-<style>
+<style>  
+    .home-container{
+          display:grid;
+          grid-template-columns: 1.5fr 6fr 1.5fr;
     
+      } 
+    .card-content{
+        display:grid;
+        grid-template-columns: 0.5fr 3fr 5.5fr;
+    }
 </style>
-
-<h1>
-    {{user.username}}
-</h1>
-
-<div>
-
-
-
-
-
+<div class ="container">
+    {% if request.user %}
+     <a href="{% url 'user-profile' request.user.id %}">
+   {{request.user}}'s profile</a>
+   {% endif %}
+ </div>
+<div class ="container">
+<h1> User list</h1>
+<br>
+<P> <b>This is the list of users. Click on the link of the user to check their profile and to follow.</b></P>
 </div>
 
-{% endblock content %}
+
+{% for profile in profile3 %}
+
+<div class ="home-container">
+    <div></div>
+        <div class="card my-2">
+            <div class="card-content">
+                <div></div>
+                <div>
+                <img src ="{% static 'images/admin.jpg' %}" alt ="placeholder image" height= 48px>
+                </div>
+                <a href="{% url 'user-profile' profile.id %}">
+                <div class="card-content">
+                    {{profile.id}}{{profile.user.username}}<br>
+                </div>
+                </a>
+            
+            </div>
+        </div>
+    <div>
+
+        
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %} 
