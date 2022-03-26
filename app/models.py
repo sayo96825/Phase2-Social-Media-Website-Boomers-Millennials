@@ -30,6 +30,7 @@ class Room(models.Model):
 
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)
@@ -64,5 +65,5 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user) 
 
-    
+
     

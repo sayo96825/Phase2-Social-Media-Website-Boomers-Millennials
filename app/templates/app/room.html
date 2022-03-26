@@ -16,12 +16,21 @@
             <h4>Posts</h4>
             <hr>
             {% for message in room_messages %}
+            {{message}}
+            {{request.user}}
+            {{message.user}}
+            {{request.user}}
+            {{profile.id}}
+            {{message.id}}
+            {{user.id}}
+            {{user}}
+
                 <div>
                     {% if request.user == message.user %}
-                    <a href="{% url 'delete-message' message.id %}">Delete</a><br>
+                    <a href="{% url 'delete-message' message.user.id %}">Delete</a><br>
                     {% endif %}
-
-                    <small><a href= "{% url 'user-profile' message.user.id %}">@{{ message.user }}</a>  &emsp;{{ message.created|timesince }} ago </small>
+                    
+                    <small><a href= "{% url 'room' message. %}">@{{ message.user }}</a>  &emsp;{{ message.created|timesince }} ago </small>
                     <p> {{ message.body }} </p>
                     <hr>
                 </div>
@@ -49,6 +58,7 @@
         &emsp;{{participants.count}} joined
         <hr>
         {% for user in participants %} 
+        
         <div>
             <div class="card my-3">
                 <a href = "{% url 'user-profile' user.id %}" class="participant">
