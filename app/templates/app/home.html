@@ -1,16 +1,18 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
+<!-- css style -->
+<!-- deviding up page into columns-->
 <style>
     .home-container{
         display:grid;
-        grid-template-columns: 1.25fr 0.25fr 2.5fr 0.25fr 1.5fr;
+        grid-template-columns: 2fr 0.5fr 5fr 0.5fr 2fr;
     }
-    
-
 </style>
 <div class="container my-5">
     <div class="home-container">
-        <div class="topic_header"  >
+        <!-- left columns -->
+        <div class="topic_header">
             <h3>Topics</h3>
             <ul class="topics_list my-3">
             <li>
@@ -25,35 +27,31 @@
                         <span>&emsp;{{ topic.room_set.all.count }} rooms</span>
                     </li>
                     <br>
-                {% else %}  
+                {% else %}
                     <a href="{% url 'login' %} ">{{ topic.name }}</a>
                     <br>
+                    <hr>
                 {% endif %}
-            {% endfor %}        
+            {% endfor %}
             </ul>
         </div>
         <div>  </div>
+        <!-- middle columns -->
         <div>
             <br>
             <h5>{{room_count}} rooms available </h5>
             <br>
-            <a href = "{% url 'create-room' %}" >
-                <button class ="button is-dark is outlined is fullwidth">Create Room
-
-            </a>
-                </button>
             <hr>
             <div>
                 {% for room in rooms %}
                 <div class="card my-4">
+                    <div class="container">
                     {% if request.user == room.host %}
-                    <a href = "{% url 'update-room' room.id %}">Edit</a>
-                    &ensp;<a href = "{% url 'delete-room' room.id %}">Delete</a>
+                    <a href = "{% url 'update-room' room.id %}">Edit room</a>
+                    &ensp;<a href = "{% url 'delete-room' room.id %}">Delete room</a>
                     {% endif %}
                     <br>
-
                     {% if user.is_authenticated %}
-        
                     <b>hosted by</b> @{{ room.host.username }}&emsp;
                     <b>created on</b> {{ room.created|timesince }} ago<br>
                     <br>
@@ -67,37 +65,43 @@
                     {% endif %}
                     &emsp; {{room.participants.all.count}} Joined
                 </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
         <div> </div>
+        <!-- right columns -->
         <div>
+            <!-- Help -->
             <div class ="container">
             <h4>Help</h4>
+            <video width ='320' controls>
+                <source src ="{% static 'images/Demo.mp4' %}" type='video/mp4'> </source>
+                Video
+            </video>
+            <div class ="container my-5">
             <a href = http://localhost:8000/room/4/ >Ask for help here</a>
-            
-            
+            </div>
         </div>
+        <!-- New Posts -->
             <div class="container my-5">
             <h4>New Posts</h4>
             <hr>
-            {% if user.is_authenticated %}
+            <!-- signed up user -->
+            {% if request.user.is_authenticated %}
             {% for message in room_messages %}
-
             <div>
                 <hr>
                 <small><a href ="{% url 'user-profile' message.user.id %}"> @{{ message.user }} </a> {{ message.created|timesince }}</small><br>
                 <small> replied to <a href="{% url 'room' message.room.id %}"> {{ message.room }}</a></small>
                <p>{{ message }} </p> 
-                {% if request.user == message.user %} 
+                {% if request.user == message.user %}
                 
                 <a href = "{% url 'delete-message' message.id %}"> Delete</a>
-        
-    
                 {% endif %}
-                
                 {% endfor %}
             </div>
+            <!-- user need to be signed in to see New posts-->
             {% else %} 
             <P> please log in to see recent activity by registered users</P>
             {% endif %}
@@ -105,4 +109,4 @@
         </div>
     </div>
 </div>
-{% endblock content %} 
+{% endblock content %}
