@@ -10,4 +10,4 @@ It also aim at integrating users from different generations to interact.
 
 # Instruction to run
 In the termianl, use the command 
-'''Python manage.py runserver'''
+'Python manage.py runserver'
