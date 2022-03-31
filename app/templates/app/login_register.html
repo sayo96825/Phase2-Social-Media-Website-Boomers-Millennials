@@ -1,30 +1,18 @@
 {% extends 'main.html' %} 
 {% block content %} 
-
 {% if page == 'login' %}
 
+<!-- sign in by signing up or using goodle account-->
  <div class ="container my-5">
     <form method="POST" action = "">
-        <p> Have you sign up yet? Sing up here ?</p>
-        
+        <p> Have you sign up yet?</p>
         {% csrf_token %}
-        <a href = '/accounts/login'>sing in with google</a>
-        <!-- <label>Username:</label>
-        <input type="text" name ="username" placeholer = "Enter Username" />
-
-        <label> Password:</label>
-        <input type = "password" name="password" placeholder="Enter Password"/>
-
-        <input type ="submit" value="Login" /> -->
-
-    </form>
-
-    
+        <a href = '/accounts/login'>sign in with google</a>
     <br>
     <a href ="{% url 'register' %}"> Sign up</a>
  </div>
-
 {% else %}
+<!-- redirect user for login page -->
 <div>
     <form method="POST" action = "">
         {% csrf_token %}
@@ -32,8 +20,7 @@
         <input type ="submit" value="Register" />
     </form>
     <p>Already sign up? You can log in here</p>
-    <a href = "{% url 'login' %}">Login</a> 
-    
+    <a href = "{% url 'login' %}">Login</a>
  </div>
 {% endif %}
- {% endblock content %}
+{% endblock content %}
