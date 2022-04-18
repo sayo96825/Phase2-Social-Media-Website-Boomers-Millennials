@@ -6,7 +6,6 @@
         <form class="form" action="" method="POST">
             {% csrf_token %}
             {# {{ form.as_p }} #}
-
             <div class = "form__group my-5">
                 <label for="room_topic">Enter a Topic</label>&emsp;&emsp;&emsp;&ensp;
                 <input required type="text" value ="{{room.topic.name}}" name="topic" placeholder ="type a topic or choose" list="topic-list" />
@@ -17,9 +16,7 @@
                         {% endfor %}
                     </select>
                 </datalist>
-
             </div>
-
             <div class="form__group my-5">
                 <label for ="room_name">Room Name</label>&emsp;&emsp;&emsp;&ensp;
                 {{form.name}}
@@ -28,13 +25,10 @@
             <div class="form__group my-5">
                 <label for = "room_description"></label>&emsp;
                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; {{form.description}}
-
             </div>
-
             <div class="form__action my-5">
                 <a class="button is-dark is-outlined" href="{{request.META.HTTP_REFERER}}">Cancel</a>
                 &emsp;<button class="button is-main is-dark is-outlined" type ="submit"> Submit</button>
-        
             </div>
         </form>
     </div>

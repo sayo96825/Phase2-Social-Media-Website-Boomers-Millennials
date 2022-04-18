@@ -1,14 +1,16 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
+<!-- css style to devide page into columns -->
 <style>
     .room-container{
         display: grid;
-        grid-template-columns: 0.5fr 3fr 0.5fr 1.5fr 0.5fr;
+        grid-template-columns: 1.5fr 4fr 1fr 2fr 1.5fr;
     }
 </style>
 <div class = "room-container my-5">
     <div></div>
+    <!-- left column -->
     <div>
         <h3>{{room.name}}</h3>
         <p> {{room.description}}</p>
@@ -21,7 +23,7 @@
                     <a href="{% url 'delete-message' message.id %}">Delete</a><br>
                     {% endif %}
 
-                    <small><a href= "{% url 'user-profile' message.user.id %}">@{{ message.user }}</a>  &emsp;{{ message.created|timesince }} ago </small>
+                    <small><a href= "{% url 'user-profile' message.user.profile.id %}">@{{ message.user }}</a>  &emsp;{{ message.created|timesince }} ago </small>
                     <p> {{ message.body }} </p>
                     <hr>
                 </div>
@@ -31,40 +33,35 @@
             <div class="comment-form">
             <form method ="POST" actions="">
                 {% csrf_token %} 
-                <input type="text" name="body" placeholder="Type your post here" />
+                <input type="text" name="body" placeholder="Type your post here " />
             </form>
-
         </div>
         {% endif %}
+    <!-- end of left column -->
     </div>
     <div></div>
-
+    <!-- right column -->
     <div>
         <div class ="container">
-        <h4>Host</h4>
-        {{room.host}}
-    </div>
-    <div class="container my-5">
+            <h4>Host</h4>
+            <div class="card my-3">
+            <p>{{room.host}}</p>
+            </div>
+        </div>
+        <div class="container my-5">
         <h4>Participants  </h4>
         &emsp;{{participants.count}} joined
         <hr>
         {% for user in participants %} 
         <div>
-            <div class="card my-3">
-                <a href = "{% url 'user-profile' user.id %}" class="participant">
-                
-            
-            <p>@{{ user.username }}</p>
+            <div class="card my-3">    
+                <p>{{ user.username }}</p>
+            </div>
         </div>
-    </div>
-
-</a>
+        </a>
         {% endfor %}
-    </div>
-</div>
-    
+        </div>
+    </div>  
     <div></div>
-
 </div>
-
 {% endblock content %}
