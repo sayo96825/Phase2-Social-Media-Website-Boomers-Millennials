@@ -76,7 +76,7 @@
             <div class ="container">
             <h4>Help</h4>
             <video width ='320' controls>
-                <source src ="{% static 'images/Demo.mp4' %}" type='video/mp4'> </source>
+                <source src ="{% static 'images/' %}" type='video/mp4'> </source>
                 Video
             </video>
             <div class ="container my-5">
@@ -103,6 +103,7 @@
             </div>
             <!-- user need to be signed in to see New posts-->
             {% else %} 
+            
             <P> please log in to see recent activity by registered users</P>
             {% endif %}
         </div>
