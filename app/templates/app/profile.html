@@ -35,13 +35,15 @@
                 <div>
                 <img src ="{% static 'images/default-profile-image.png' %}" alt ="placeholder image" height= 48px>
                 </div>
-                <a href="{% url 'user-profile' profile.id %}">
                 <div class="card-content">
-                    {{profile.id}}{{profile.user.username}}<br>
+                    <a href="{% url 'user-profile' profile.id %}">
+                    {{profile.user.username}} 
+                    
                 </div>
-                </a>
-            
-            </div>
+            </a>
+                    {{profile.generation}}
+                </div>
+        
         </div>
     <div> 
     </div>
