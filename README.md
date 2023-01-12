@@ -1,4 +1,7 @@
-# Boomers 🤝 Millennials 
+# UBC-Direct-Study-Phase2-Scocial-Media_Website
+## Boomers 🤝 Millennials 
+
+⚒️ Django
 
 Boomers 🤝 Mellennials is the social media website not limited to, but build with older adults in mind.
 
