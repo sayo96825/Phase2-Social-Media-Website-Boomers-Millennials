@@ -1,4 +1,4 @@
-# UBC-Direct-Study-Phase2-Scocial-Media_Website
+# UBC-Direct-Study-Phase2-Social-Media_Website
 ## Boomers 🤝 Millennials 
 
 ⚒️ Django
